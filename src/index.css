@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #fff8f5;
+  color: #2b2b2b;
+}
+
+h1, h2, h3, .font-heading {
+  font-family: 'Baloo 2', cursive;
+}
+
+.btn-primary {
+  @apply bg-pink-500 hover:bg-pink-600 text-white font-medium px-6 py-3 rounded-full flex items-center gap-2 transition;
+}
+
+.btn-outline {
+  @apply border border-gray-300 hover:border-pink-400 text-gray-700 font-medium px-6 py-3 rounded-full flex items-center gap-2 transition bg-white;
+}
+
+.section-label {
+  @apply text-pink-500 font-semibold tracking-wide text-sm uppercase;
+}
