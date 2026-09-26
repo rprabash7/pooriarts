@@ -46,7 +46,7 @@ export default function Footer() {
           </div>
           
 
-          {/* ---------- Link columns ---------- */}
+          {/* ---------- Link columns ---------- */}  
           <div className="grid grid-cols-3 gap-6">
             <div>
               <p className="italic font-heading text-lg mb-1">Quick Links</p>
