@@ -2,36 +2,7 @@ import React from "react";
 import { FiInstagram, FiMessageCircle, FiVideo } from "react-icons/fi";
 import { FaHeart, FaComment, FaPaperPlane } from "react-icons/fa";
 
-/* ============================================================
-   ⚠️ IMAGE FILENAME MAPPING
-   ============================================================
-   Mee Explorer లో unna file names (Every, Color, Behind, work,
-   Smart, Customes, Arts, Indian, Create, Pet) ni ee 10 captions
-   తో map chesanu, screenshot order prakaram.
-
-   Every    -> "Every Stroke Tells a Story"
-   Color    -> "Colors Bring Life"
-   Behind   -> "Behind the Scenes"
-   work     -> "Work In Progress"
-   Smart    -> "Small Art Big Happiness"
-   Customes -> "Custom Creations"
-   Arts     -> "Art Prints For Your Space"
-   Indian   -> "Indian Art Heritage"
-   Create   -> "Create Imagine Inspire Repeat"
-   Pet      -> "Pet Portraits"
-
-   ⚠️ IMPORTANT: Kింద ".jpg" extension pettanu — mee actual files
-   ".png" aithe, prathi import line lo ".jpg" ni ".png" tho
-   మార్చండి (Explorer Windows lo extension చూపించదు, so check
-   right-click > Properties లో అసలు extension ఏమిటో).
-
-   Add cheyడానికి:
-   1. src/assets/ folder lo pai file names తోనే (correct extension తో) unnayi.
-   2. Kింద "REAL IMAGES" block uncomment cheయండి.
-   3. "PLACEHOLDER IMAGES" block delete cheయండి.
-   ============================================================ */
-
-// ---------- REAL IMAGES (uncomment after confirming filenames/extensions) ----------
+// Keep these filenames exactly as they appear in your src/assets folder.
 import every from "../assets/Every.png";
 import color from "../assets/Color.png";
 import behind from "../assets/Behind.png";
@@ -42,9 +13,6 @@ import arts from "../assets/Arts.png";
 import indian from "../assets/Indian.png";
 import create from "../assets/Create.png";
 import pet from "../assets/Pet.png";
-
-// ---------- PLACEHOLDER IMAGES (delete this block once real images are uncommented) ----------
-
 
 const posts = [
   { id: 1, image: every, caption: "Every Stroke Tells a Story", heart: true, underline: "red", type: "post" },
@@ -61,97 +29,87 @@ const posts = [
 
 export default function InstaFeed() {
   return (
-    <section className="relative bg-black py-16 px-6 overflow-hidden">
-      {/* ---------- Decorative paint splash corners ---------- */}
-      <div className="absolute -bottom-14 -left-10 w-56 h-56 bg-gradient-to-tr from-blue-400 via-white to-red-400 opacity-25 blur-3xl rounded-full pointer-events-none" />
-      <div className="absolute -top-14 -right-10 w-56 h-56 bg-gradient-to-bl from-yellow-400 via-red-500 to-blue-400 opacity-25 blur-3xl rounded-full pointer-events-none" />
+    <section aria-labelledby="instagram-heading" className="relative isolate overflow-hidden bg-black px-4 py-14 text-white sm:px-6 sm:py-16 lg:py-20">
+      <div aria-hidden="true" className="pointer-events-none absolute -bottom-16 -left-20 hidden h-56 w-56 rounded-full bg-gradient-to-tr from-blue-400 via-white to-red-400 opacity-20 blur-3xl lg:block" />
+      <div aria-hidden="true" className="pointer-events-none absolute -right-20 -top-16 hidden h-56 w-56 rounded-full bg-gradient-to-bl from-yellow-400 via-red-500 to-blue-400 opacity-20 blur-3xl lg:block" />
 
-      {/* ---------- Corner decorative text ---------- */}
-      <p className="hidden md:block absolute top-6 left-6 italic text-white text-sm leading-tight z-10">
-        Art<br />Connects<br />People <FaHeart className="inline text-red-500 text-xs" />
-        <span className="block w-14 border-t-2 border-red-500 mt-1" />
-      </p>
-      <p className="hidden md:block absolute top-6 right-6 italic text-white text-sm leading-tight text-right z-10">
-        Follow<br />For More<br />Art
-        <span className="block w-14 border-t-2 border-red-500 mt-1 ml-auto" />
-      </p>
-      
+      <div className="relative z-10 mx-auto max-w-7xl">
+        <div className="relative mx-auto mb-8 max-w-3xl text-center sm:mb-10">
+          <p aria-hidden="true" className="absolute -left-28 top-0 hidden -rotate-6 text-left font-heading text-base italic leading-tight xl:block">
+            Art<br />Connects<br />People <FaHeart className="inline text-xs text-red-500" />
+            <span className="mt-1 block w-14 border-t-2 border-red-500" />
+          </p>
+          <p aria-hidden="true" className="absolute -right-28 top-0 hidden rotate-3 text-right font-heading text-base italic leading-tight xl:block">
+            Follow<br />For More<br />Art
+            <span className="ml-auto mt-1 block w-14 border-t-2 border-red-500" />
+          </p>
 
-      {/* ---------- Header ---------- */}
-      <div className="max-w-3xl mx-auto text-center mb-10 relative z-10">
-        <p className="text-gray-400 text-xs tracking-[0.35em] font-semibold flex items-center justify-center gap-4">
-          <span className="w-10 border-t border-gray-500" /> OUR INSTAGRAM <span className="w-10 border-t border-gray-500" />
-        </p>
-        <h2 className="font-heading italic text-4xl md:text-5xl font-bold mt-3">
-          <span className="text-white">Moments from </span>
-          <span className="bg-gradient-to-r from-yellow-400 via-pink-500 to-blue-400 bg-clip-text text-transparent">
-            Poori Arts
-          </span>
-        </h2>
-        <p className="text-gray-400 text-sm md:text-base mt-3">
-          Artworks | Behind the Scenes | Happy Customers | Creative Vibes
-        </p>
-      </div>
-
-      {/* ---------- Instagram grid ---------- */}
-      <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 relative z-10">
-        {posts.map((p) => (
-          <div key={p.id} className="relative aspect-square rounded-xl overflow-hidden group">
-            <img
-              src={p.image}
-              alt={p.caption}
-              className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
-
-            <span className="absolute top-2 right-2 w-6 h-6 rounded bg-black/50 flex items-center justify-center text-white text-xs">
-              {p.type === "reel" ? <FiVideo /> : <FiMessageCircle />}
+          <p className="flex items-center justify-center gap-3 text-[10px] font-semibold tracking-[0.25em] text-gray-300 sm:text-xs sm:tracking-[0.35em]">
+            <span aria-hidden="true" className="w-7 border-t border-gray-500 sm:w-10" />
+            OUR INSTAGRAM
+            <span aria-hidden="true" className="w-7 border-t border-gray-500 sm:w-10" />
+          </p>
+          <h2 id="instagram-heading" className="mt-3 font-heading text-4xl font-bold italic leading-tight sm:text-5xl lg:text-6xl">
+            Moments from{" "}
+            <span className="bg-gradient-to-r from-yellow-400 via-pink-500 to-blue-400 bg-clip-text text-transparent">
+              Poori Arts
             </span>
-
-            <div className="absolute bottom-3 left-3 right-3">
-              <p className="text-white text-sm font-medium leading-tight italic">
-                {p.caption} {p.heart && <FaHeart className="inline text-red-500 text-xs" />}
-              </p>
-              {p.underline !== "none" && (
-                <span
-                  className={`block w-10 border-t-2 mt-1 ${
-                    p.underline === "red" ? "border-red-500" : "border-yellow-400"
-                  }`}
-                />
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* ---------- Bottom row: icons + follow button ---------- */}
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 mt-12 relative z-10">
-        <div className="flex flex-wrap items-center gap-8 text-white text-sm">
-          <div className="flex items-center gap-2">
-            <FaHeart /> <span>Like<br />Art</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <FaComment /> <span>Share<br />Creativity</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <FaPaperPlane /> <span>Be a Part<br />of Our Journey</span>
-          </div>
+          </h2>
+          <p className="mt-3 text-sm leading-relaxed text-gray-300 sm:text-base">
+            Artworks | Behind the Scenes | Happy Customers | Creative Vibes
+          </p>
         </div>
 
-        <a
-          href="https://instagram.com/pooriarts"
-          target="_blank"
-          rel="noreferrer"
-          className="flex items-center gap-2 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-400 text-white font-semibold px-7 py-3 rounded-full shadow-lg hover:opacity-90 transition"
-        >
-          <FiInstagram size={18} /> Follow Us on Instagram →
-        </a>
-      </div>
+        {/* One column on narrow phones, two on wider phones, three on tablets, five on desktop. */}
+        <div className="grid grid-cols-1 gap-3 min-[380px]:grid-cols-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-5">
+          {posts.map((post) => (
+            <div key={post.id} className="group relative aspect-square overflow-hidden rounded-xl border border-white/10 bg-neutral-900">
+              <img
+                src={post.image}
+                alt={post.caption}
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover transition-transform duration-500 motion-safe:group-hover:scale-105"
+              />
+              <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
+              <span aria-hidden="true" className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded bg-black/60 text-sm">
+                {post.type === "reel" ? <FiVideo /> : <FiMessageCircle />}
+              </span>
+              <div className="absolute bottom-2 left-2 right-2 sm:bottom-3 sm:left-3 sm:right-3">
+                <p className="font-heading text-sm font-semibold italic leading-tight sm:text-base">
+                  {post.caption}{" "}
+                  {post.heart && <FaHeart aria-hidden="true" className="inline text-xs text-red-500" />}
+                </p>
+                {post.underline !== "none" && (
+                  <span aria-hidden="true" className={`mt-1 block w-10 border-t-2 ${post.underline === "red" ? "border-red-500" : "border-yellow-400"}`} />
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
 
-      <div className="flex items-center justify-center gap-4 mt-10 relative z-10">
-        <span className="w-16 border-t border-gray-600" />
-        <p className="text-gray-400 text-xs tracking-[0.3em]">JOIN OUR CREATIVE COMMUNITY</p>
-        <span className="w-16 border-t border-gray-600" />
+        <div className="mt-9 flex flex-col items-center justify-between gap-7 lg:mt-12 lg:flex-row">
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-4 text-xs sm:gap-x-8 sm:text-sm lg:justify-start">
+            <div className="flex items-center gap-2"><FaHeart aria-hidden="true" /><span>Like<br />Art</span></div>
+            <div className="flex items-center gap-2"><FaComment aria-hidden="true" /><span>Share<br />Creativity</span></div>
+            <div className="flex items-center gap-2"><FaPaperPlane aria-hidden="true" /><span>Be a Part<br />of Our Journey</span></div>
+          </div>
+          {/* Verify this is your actual Instagram handle before publishing. */}
+          <a
+            href="https://instagram.com/pooriarts"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-pink-600 via-red-500 to-yellow-400 px-6 py-3 text-center text-sm font-semibold shadow-lg transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:w-auto sm:text-base"
+          >
+            <FiInstagram aria-hidden="true" size={18} /> Follow Us on Instagram <span aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <div className="mt-9 flex items-center justify-center gap-3 text-center sm:gap-4">
+          <span aria-hidden="true" className="hidden w-14 border-t border-gray-600 sm:block" />
+          <p className="text-[10px] tracking-[0.16em] text-gray-400 sm:text-xs sm:tracking-[0.3em]">JOIN OUR CREATIVE COMMUNITY</p>
+          <span aria-hidden="true" className="hidden w-14 border-t border-gray-600 sm:block" />
+        </div>
       </div>
     </section>
   );
