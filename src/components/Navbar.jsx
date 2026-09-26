@@ -1,103 +1,105 @@
-import React from "react";
-import { Link, NavLink } from "react-router-dom";
-import { FiSearch, FiUser, FiShoppingCart } from "react-icons/fi";
-import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
+import { FiMenu, FiX, FiShoppingCart } from "react-icons/fi";
 import { useCart } from "../context/CartContext.jsx";
-
-/* ============================================================
-   ⚠️ LOGO IMAGE SETUP INSTRUCTIONS
-   ============================================================
-   Mee logo file "Poori-Art.jpg" ni:
-   1. src/assets/ folder lo save cheyandi (exact name: poori-art-logo.jpg
-      ani rename cheyandi, leda kింద import line lo mee exact
-      filename tho update cheyandi).
-   2. Kింద unna "PLACEHOLDER" text-logo block ni DELETE cheyandi.
-   3. "REAL LOGO" block ni UNCOMMENT cheyandi.
-   ============================================================ */
-
-// ---------- REAL LOGO (uncomment after adding file to src/assets/) ----------
 import pooriLogo from "../assets/poori-art-logo.jpg";
+
+// Add other pages here after their routes exist in App.jsx.
+const links = [
+  { label: "Home", to: "/" },
+  { label: "Shop", to: "/shop" },
+  { label: "About", to: "/about" },
+  { label: "Gallery", to: "/gallery" },
+  { label: "Blog", to: "/blog" },
+  { label: "Contact", to: "/contact" },
+];
 
 export default function Navbar() {
   const { cartCount } = useCart();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+    const closeOnEscape = (event) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [menuOpen]);
 
   const navLinkClass = ({ isActive }) =>
-    `text-sm font-semibold pb-1 border-b-2 transition ${
+    `inline-flex min-h-11 items-center border-b-2 px-1 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
       isActive
-        ? "text-red-500 border-red-500"
-        : "text-white border-transparent hover:text-red-400"
+        ? "border-red-500 text-red-400"
+        : "border-transparent text-white hover:border-red-500 hover:text-red-400"
     }`;
 
   return (
-    <header className="sticky top-0 z-50 bg-black">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3 gap-6">
-        {/* LOGO */}
-        <Link to="/" className="flex items-center shrink-0">
-          {/* ---------- REAL LOGO (uncomment once image is added) ---------- */}
-          { <img src={pooriLogo} alt="Poori Arts Logo" className="h-14 w-auto object-contain" /> }
-
-          {/* ---------- PLACEHOLDER LOGO (delete once real image is added) ---------- */}
-          
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-black text-white">
+      <div className="mx-auto flex h-[72px] max-w-[1600px] items-center justify-between gap-3 px-4 sm:h-[82px] sm:px-6 lg:gap-5 lg:px-8 xl:px-10">
+        <Link
+          to="/"
+          aria-label="Poori Arts — Home"
+          className="flex min-w-0 shrink-0 items-center rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        >
+          <img
+            src={pooriLogo}
+            alt="Poori Arts"
+            className="h-11 w-auto max-w-[155px] object-contain sm:h-14 sm:max-w-[200px] xl:max-w-[230px]"
+          />
         </Link>
 
-        {/* NAV LINKS */}
-        <nav className="hidden md:flex items-center gap-8">
-          <NavLink to="/" className={navLinkClass}>Home</NavLink>
-          <NavLink to="/shop" className={navLinkClass}>Shop</NavLink>
-          <NavLink to="/about" className={navLinkClass}>About</NavLink>
-          <NavLink to="/gallery" className={navLinkClass}>Gallery</NavLink>
-          <NavLink to="/blog" className={navLinkClass}>Blog</NavLink>
-          <NavLink to="/contact" className={navLinkClass}>Contact</NavLink>
+        <nav aria-label="Main navigation" className="hidden items-center gap-3 lg:flex xl:gap-6">
+          {links.map(({ label, to }) => (
+            <NavLink key={to} to={to} end={to === "/"} className={navLinkClass}>
+              {label}
+            </NavLink>
+          ))}
         </nav>
 
-        {/* SEARCH BAR */}
-        <div className="hidden lg:flex items-center bg-neutral-900 border border-neutral-700 rounded-full px-4 py-2 w-64">
-          <FiSearch className="text-gray-400 mr-2" />
-          <input
-            type="text"
-            placeholder="Search artworks..."
-            className="bg-transparent outline-none text-sm w-full text-white placeholder-gray-500"
-          />
-        </div>
-
-        {/* ICONS + SOCIAL */}
-        <div className="flex items-center gap-5">
-          <Link to="/account" className="text-white hover:text-red-400">
-            <FiUser size={20} />
+        <div className="flex shrink-0 items-center gap-2 sm:gap-4">
+          <Link
+            to="/cart"
+            aria-label={`Cart, ${cartCount} items`}
+            className="relative flex h-11 w-11 items-center justify-center rounded-full text-white transition-colors hover:text-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          >
+            <FiShoppingCart aria-hidden="true" size={23} />
+            {cartCount > 0 && (
+              <span aria-hidden="true" className="absolute right-0 top-0 flex min-h-[18px] min-w-[18px] items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-bold text-white">
+                {cartCount > 99 ? "99+" : cartCount}
+              </span>
+            )}
           </Link>
 
-          <Link to="/cart" className="relative text-white hover:text-red-400">
-            <FiShoppingCart size={20} />
-            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
-              {cartCount}
-            </span>
-          </Link>
-
-          <span className="hidden md:block w-px h-6 bg-neutral-700" />
-
-          <div className="hidden md:flex items-center gap-3">
-            <a href="#" aria-label="Facebook" className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs hover:opacity-80">
-              <FaFacebookF />
-            </a>
-            <a href="#" aria-label="Twitter" className="w-7 h-7 rounded-full bg-sky-500 flex items-center justify-center text-white text-xs hover:opacity-80">
-              <FaTwitter />
-            </a>
-            <a href="#" aria-label="Instagram" className="w-7 h-7 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-500 flex items-center justify-center text-white text-xs hover:opacity-80">
-              <FaInstagram />
-            </a>
-            <a href="#" aria-label="YouTube" className="w-7 h-7 rounded-md bg-red-600 flex items-center justify-center text-white text-xs hover:opacity-80">
-              <FaYoutube />
-            </a>
-          </div>
-        </div>
-
-        {/* TAGLINE */}
-        <div className="hidden xl:block text-right shrink-0">
-          <p className="italic font-heading text-white text-sm leading-tight">Create</p>
-          <p className="italic font-heading text-white text-sm leading-tight">Imagine</p>
-          <p className="italic font-heading text-red-500 text-sm leading-tight underline decoration-red-500">Inspire</p>
+          <button
+            type="button"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-controls="mobile-nav"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((open) => !open)}
+            className="flex h-11 w-11 items-center justify-center rounded-full text-white transition-colors hover:text-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white lg:hidden"
+          >
+            {menuOpen ? <FiX aria-hidden="true" size={25} /> : <FiMenu aria-hidden="true" size={25} />}
+          </button>
         </div>
       </div>
+
+      {menuOpen && (
+        <nav id="mobile-nav" aria-label="Mobile navigation" className="border-t border-white/10 bg-neutral-950 px-4 pb-5 pt-2 sm:px-6 lg:hidden">
+          <div className="mx-auto flex max-w-[1600px] flex-col gap-1">
+            {links.map(({ label, to }) => (
+              <NavLink key={to} to={to} end={to === "/"} className={navLinkClass}>
+                {label}
+              </NavLink>
+            ))}
+          </div>
+        </nav>
+      )}
     </header>
   );
 }
