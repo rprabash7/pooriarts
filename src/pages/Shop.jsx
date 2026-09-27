@@ -13,48 +13,88 @@ function ShopProductCard({ product }) {
   const wished = isWishlisted(product.id);
 
   return (
-    <article className="overflow-hidden rounded-xl border border-white/10 bg-neutral-900 text-white">
-      <div className="relative aspect-square overflow-hidden bg-neutral-800">
+  <article className="overflow-hidden rounded-xl border border-white/10 bg-neutral-900 text-white">
+    <div className="relative aspect-square overflow-hidden bg-neutral-800">
+      <Link
+        to={`/product/${encodeURIComponent(product.id)}`}
+        aria-label={`View details for ${product.title}`}
+        className="block h-full w-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-red-500"
+      >
         {product.image ? (
-          <img src={product.image} alt={product.title} loading="lazy" className="h-full w-full object-cover" />
+          <img
+            src={product.image}
+            alt={product.title}
+            loading="lazy"
+            className="h-full w-full object-cover"
+          />
         ) : (
-          <div className="flex h-full items-center justify-center text-sm text-gray-400">Image coming soon</div>
+          <div className="flex h-full items-center justify-center text-sm text-gray-400">
+            Image coming soon
+          </div>
         )}
+      </Link>
+
+      <button
+        type="button"
+        onClick={() => toggleWishlist(product)}
+        aria-label={
+          wished
+            ? `Remove ${product.title} from wishlist`
+            : `Add ${product.title} to wishlist`
+        }
+        aria-pressed={wished}
+        className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full bg-black/70 hover:bg-black"
+      >
+        <FiHeart
+          aria-hidden="true"
+          className={wished ? "fill-red-500 text-red-500" : ""}
+        />
+      </button>
+    </div>
+
+    <div className="p-3 sm:p-4">
+      <h2 className="truncate text-sm font-semibold sm:text-base">
+        <Link
+          to={`/product/${encodeURIComponent(product.id)}`}
+          className="hover:text-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-red-500"
+        >
+          {product.title}
+        </Link>
+      </h2>
+
+      <Link
+        to={`/shop/${product.category}`}
+        className="mt-1 inline-block text-xs capitalize text-gray-400 hover:text-white"
+      >
+        {product.category.replaceAll("-", " ")}
+      </Link>
+
+      <div className="mt-2 flex items-center justify-between gap-2">
+        <p className="font-semibold">
+          ₹{product.price.toLocaleString("en-IN")}
+        </p>
         <button
           type="button"
-          onClick={() => toggleWishlist(product)}
-          aria-label={wished ? `Remove ${product.title} from wishlist` : `Add ${product.title} to wishlist`}
-          aria-pressed={wished}
-          className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full bg-black/70 hover:bg-black"
+          onClick={() => addToCart(product)}
+          aria-label={`Add ${product.title} to cart`}
+          className="flex h-10 w-10 items-center justify-center rounded-lg bg-red-600 hover:bg-red-700"
         >
-          <FiHeart aria-hidden="true" className={wished ? "fill-red-500 text-red-500" : ""} />
+          <FiShoppingCart aria-hidden="true" />
         </button>
       </div>
-      <div className="p-3 sm:p-4">
-        <h2 className="truncate text-sm font-semibold sm:text-base">{product.title}</h2>
-        <Link to={`/shop/${product.category}`} className="mt-1 inline-block text-xs capitalize text-gray-400 hover:text-white">
-          {product.category.replaceAll("-", " ")}
-        </Link>
-        <div className="mt-2 flex items-center justify-between gap-2">
-          <p className="font-semibold">₹{product.price.toLocaleString("en-IN")}</p>
-          <button
-            type="button"
-            onClick={() => addToCart(product)}
-            aria-label={`Add ${product.title} to cart`}
-            className="flex h-10 w-10 items-center justify-center rounded-lg bg-red-600 hover:bg-red-700"
-          >
-            <FiShoppingCart aria-hidden="true" />
-          </button>
-        </div>
-        {product.rating > 0 && (
-          <p className="mt-1 flex items-center gap-1 text-xs text-yellow-400">
-            <FiStar aria-hidden="true" className="fill-yellow-400" /> {product.rating}
-            {product.reviews > 0 && <span className="text-gray-400">({product.reviews})</span>}
-          </p>
-        )}
-      </div>
-    </article>
-  );
+
+      {product.rating > 0 && (
+        <p className="mt-1 flex items-center gap-1 text-xs text-yellow-400">
+          <FiStar aria-hidden="true" className="fill-yellow-400" />
+          {product.rating}
+          {product.reviews > 0 && (
+            <span className="text-gray-400">({product.reviews})</span>
+          )}
+        </p>
+      )}
+    </div>
+  </article>
+);
 }
 
 export default function Shop() {
