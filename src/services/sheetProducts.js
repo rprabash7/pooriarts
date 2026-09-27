@@ -31,6 +31,7 @@ function normalizeRow(row) {
     reviews: Number(row.reviews) || 0,
     size: row.size?.trim().toLowerCase() || "",
     style: row.style?.trim().toLowerCase() || "",
+    gallery: row.gallery?.trim().toLowerCase() || "no",
   };
 }
 

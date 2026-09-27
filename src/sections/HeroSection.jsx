@@ -63,11 +63,13 @@ export default function HeroSection() {
 
           <div className="mb-8 flex flex-col gap-3 min-[420px]:flex-row min-[420px]:flex-wrap sm:mb-9 sm:gap-4">
             <Link
-              to="/gallery"
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-red-600 px-6 py-3 text-sm font-semibold transition-colors hover:bg-red-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:text-base"
-            >
-              <FaPaintBrush aria-hidden="true" className="text-sm" /> Explore Artworks <span aria-hidden="true">→</span>
-            </Link>
+  to="/shop"
+  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-red-600 px-6 py-3 text-sm font-semibold transition-colors hover:bg-red-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:text-base"
+>
+  <FaPaintBrush aria-hidden="true" className="text-sm" />
+  Explore Artworks
+  <span aria-hidden="true">→</span>
+</Link>
             <Link
               to="/about"
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/70 bg-black/25 px-6 py-3 text-sm font-semibold transition-colors hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:text-base"

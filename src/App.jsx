@@ -8,6 +8,10 @@ import CategoryPage from "./pages/CategoryPage.jsx";
 import ProductDetails from "./pages/ProductDetails.jsx";
 import CustomOrder from "./pages/CustomOrder.jsx";
 import Cart from "./pages/Cart.jsx";
+import About from "./pages/About.jsx";
+import Gallery from "./pages/Gallery.jsx";
+import Blog from "./pages/Blog.jsx";
+import Contact from "./pages/Contact.jsx";
 
 export default function App() {
   return (
@@ -21,6 +25,10 @@ export default function App() {
           <Route path="/product/:productId" element={<ProductDetails />} />
           <Route path="/custom-order" element={<CustomOrder />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>
       <Footer />
