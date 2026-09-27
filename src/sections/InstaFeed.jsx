@@ -96,7 +96,7 @@ export default function InstaFeed() {
           </div>
           {/* Verify this is your actual Instagram handle before publishing. */}
           <a
-            href="https://instagram.com/pooriarts"
+            href="https://www.instagram.com/poori_arts"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-pink-600 via-red-500 to-yellow-400 px-6 py-3 text-center text-sm font-semibold shadow-lg transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:w-auto sm:text-base"
