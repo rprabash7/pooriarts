@@ -5,6 +5,7 @@ import Footer from "./components/Footer.jsx";
 import Home from "./pages/Home.jsx";
 import Shop from "./pages/Shop.jsx";
 import CategoryPage from "./pages/CategoryPage.jsx";
+import ProductDetails from "./pages/ProductDetails.jsx";
 import CustomOrder from "./pages/CustomOrder.jsx";
 import Cart from "./pages/Cart.jsx";
 
@@ -17,6 +18,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/shop/:categorySlug" element={<CategoryPage />} />
+          <Route path="/product/:productId" element={<ProductDetails />} />
           <Route path="/custom-order" element={<CustomOrder />} />
           <Route path="/cart" element={<Cart />} />
         </Routes>
